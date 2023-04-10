@@ -15,6 +15,20 @@ const ContactCard = ({ contact, deleteContact }) => {
               <h4 className="card-title">{contact.name}</h4>
               <h5 className="card-subtitle mb-2 text-muted">{contact.phone}</h5>
               <p className="card-text">{contact.address}</p>
+              <Link
+                to={`/contacts/edit/${contact.uuid}`}
+                className="btn btn-secondary mr-2"
+              >
+                <FaEdit /> Edit
+              </Link>
+              &nbsp;
+              <button
+                onClick={() => deleteContact(contact.uuid)}
+                type="button"
+                className="btn btn-danger"
+              >
+                <FaTrash /> Delete
+              </button>
             </div>
           </div>
         </div>
