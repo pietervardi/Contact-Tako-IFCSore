@@ -37,8 +37,4 @@ const ContactCard = ({ contact, deleteContact }) => {
   )
 };
 
-<<<<<<< HEAD
 export default ContactCard;
-=======
-export default ContactCard;
->>>>>>> 9f57c5259edc80dc18c7dc396c2f97556cd53a41

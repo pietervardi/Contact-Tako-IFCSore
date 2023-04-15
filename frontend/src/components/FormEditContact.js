@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams, Link } from 'react-router-dom';
@@ -136,14 +135,3 @@ const FormEditContact = () => {
 };
 
 export default FormEditContact;
-=======
-import React from 'react'
-
-const FormEditContact = () => {
-  return (
-    <div>FormEditContact</div>
-  )
-}
-
-export default FormEditContact
->>>>>>> 9f57c5259edc80dc18c7dc396c2f97556cd53a41

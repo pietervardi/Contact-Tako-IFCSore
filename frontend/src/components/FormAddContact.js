@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
@@ -116,14 +115,3 @@ const FormAddContact = () => {
 };
 
 export default FormAddContact;
-=======
-import React from 'react'
-
-const FormAddContact = () => {
-  return (
-    <div>FormAddContact</div>
-  )
-}
-
-export default FormAddContact
->>>>>>> 9f57c5259edc80dc18c7dc396c2f97556cd53a41
