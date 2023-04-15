@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -45,3 +46,14 @@ const ContactList = () => {
 };
 
 export default ContactList;
+=======
+import React from 'react'
+
+const ContactList = () => {
+  return (
+    <div>ContactList</div>
+  )
+}
+
+export default ContactList
+>>>>>>> 9f57c5259edc80dc18c7dc396c2f97556cd53a41
