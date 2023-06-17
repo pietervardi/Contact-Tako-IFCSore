@@ -6,6 +6,18 @@ const fs = require('fs');
 
 const getContacts = async (req, res) => {
   try {
+    const page = parseInt(req.query.page) || 0;
+    const limit = parseInt(req.query.limit) || 8;
+    const offset = limit * page;
+    const totalRows = await Contact.count({
+      attributes: ['uuid', 'name', 'phone', 'address', 'image', 'url'],
+      include: [{
+        model: User,
+        attributes: ['name', 'email']
+      }],
+    });
+    const totalPages = Math.ceil(totalRows / limit);
+
     let response;
     response = await Contact.findAll({
       attributes: ['uuid', 'name', 'phone', 'address', 'image', 'url'],
@@ -15,9 +27,17 @@ const getContacts = async (req, res) => {
       include: [{
         model: User,
         attributes: ['name', 'email']
-      }]
+      }],
+      offset,
+      limit
     });
-    res.status(200).json(response);
+    res.status(200).json({
+      result: response,
+      page: page,
+      limit: limit,
+      totalRows: totalRows,
+      totalPages: totalPages
+    });
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
