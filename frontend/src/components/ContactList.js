@@ -5,14 +5,23 @@ import Card from './Card';
 
 const ContactList = () => {
   const [contacts, setContacts] = useState([]);
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(8);
 
   useEffect(() => {
     getContacts();
-  }, []);
+  }, [page]);
 
   const getContacts = async () => {
-    const response = await axios.get('http://localhost:5000/contacts');
-    setContacts(response.data);
+    const response = await axios.get(
+      `http://localhost:5000/contacts?page=${page}&limit=${limit}`
+    );
+    setContacts(response.data.result);
+    setPage(response.data.page);
+  };
+
+  const changePage = (newPage) => {
+    setPage(newPage);
   };
 
   const deleteContact = async (contactId) => {
@@ -34,11 +43,24 @@ const ContactList = () => {
       <div className='d-flex justify-content-start flex-wrap'>
         {contacts.length === 0 ? "No Contact" : contacts.map(contact => (
           <Card
-            key={contact.uuid} 
+            key={contact.uuid}
             contact={contact}
             deleteContact={deleteContact}
           />
         ))}
+      </div>
+      <div className='d-flex justify-content-center mt-2'>
+        <button disabled={page === 0} onClick={() => changePage(page - 1)}>
+          Previous
+        </button>
+        {Array.from({ length: contacts.totalPages }, (_, i) => i).map((n) => (
+          <button key={n} disabled={n === page} onClick={() => changePage(n)}>
+            {n + 1}
+          </button>
+        ))}
+        <button disabled={page + 1 === contacts.totalPages} onClick={() => changePage(page + 1)}>
+          Next
+        </button>
       </div>
     </div>
   );
