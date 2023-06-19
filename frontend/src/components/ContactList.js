@@ -1,36 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import useSWR, { useSWRConfig } from 'swr';
 import Card from './Card';
 
 const ContactList = () => {
-  const [contacts, setContacts] = useState([]);
+  const { mutate } = useSWRConfig();
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(8);
 
-  useEffect(() => {
-    getContacts();
-  }, [page]);
-
   const getContacts = async () => {
-    const response = await axios.get(
-      `http://localhost:5000/contacts?page=${page}&limit=${limit}`
-    );
-    setContacts(response.data.result);
-    setPage(response.data.page);
+    const response = await axios.get(`http://localhost:5000/contacts?page=${page}&limit=${limit}`);
+    return response.data;
   };
 
-  const changePage = (newPage) => {
-    setPage(newPage);
-  };
+  const { data } = useSWR(`contacts?page=${page}&limit=${limit}`, getContacts, { page, limit });
+  if (!data) return <h2>Loading...</h2>;
 
   const deleteContact = async (contactId) => {
     try {
       await axios.delete(`http://localhost:5000/contacts/${contactId}`);
-      getContacts();
+      mutate(`contacts?page=${page}&limit=${limit}`);;
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const changePage = (newPage) => {
+    setPage(newPage);
   };
 
   return (
@@ -41,7 +38,7 @@ const ContactList = () => {
         Add New
       </Link>
       <div className='d-flex justify-content-start flex-wrap'>
-        {contacts.length === 0 ? "No Contact" : contacts.map(contact => (
+        {data.result.length === 0 ? "No Contact" : data.result.map(contact => (
           <Card
             key={contact.uuid}
             contact={contact}
@@ -53,12 +50,12 @@ const ContactList = () => {
         <button disabled={page === 0} onClick={() => changePage(page - 1)}>
           Previous
         </button>
-        {Array.from({ length: contacts.totalPages }, (_, i) => i).map((n) => (
+        {Array.from({ length: data.totalPages }, (_, i) => i).map((n) => (
           <button key={n} disabled={n === page} onClick={() => changePage(n)}>
             {n + 1}
           </button>
         ))}
-        <button disabled={page + 1 === contacts.totalPages} onClick={() => changePage(page + 1)}>
+        <button disabled={page + 1 === data.totalPages} onClick={() => changePage(page + 1)}>
           Next
         </button>
       </div>
