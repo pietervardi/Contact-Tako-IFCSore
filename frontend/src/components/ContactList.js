@@ -8,6 +8,7 @@ const ContactList = () => {
   const { mutate } = useSWRConfig();
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(8);
+  const [search, setSearch] = useState('');
 
   const getContacts = async () => {
     const response = await axios.get(`http://localhost:5000/contacts?page=${page}&limit=${limit}`);
@@ -37,14 +38,39 @@ const ContactList = () => {
       <Link to='/contacts/add' className='btn btn-primary mb-2'>
         Add New
       </Link>
+      <div className='input-group mb-3'>
+        <input
+          type='text'
+          className='form-control'
+          placeholder='Search Contacts...'
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <button className='btn btn-outline-secondary' type='button'>
+          Search
+        </button>
+      </div>
       <div className='d-flex justify-content-start flex-wrap'>
-        {data.result.length === 0 ? "No Contact" : data.result.map(contact => (
-          <Card
-            key={contact.uuid}
-            contact={contact}
-            deleteContact={deleteContact}
-          />
-        ))}
+        {data.result
+          .filter((item) => {
+            const lowercaseSearch = search.toLowerCase();
+            const lowercaseName = item.name.toLowerCase();
+            const lowercasePhone = item.phone.toLowerCase();
+            const lowercaseAddress = item.address.toLowerCase();
+
+            return (
+              lowercaseSearch === '' ||
+              lowercaseName.includes(lowercaseSearch) ||
+              lowercasePhone.includes(lowercaseSearch) ||
+              lowercaseAddress.includes(lowercaseSearch)
+            );
+          })
+          .map((item) => (
+            <Card
+              key={item.uuid}
+              contact={item}
+              deleteContact={deleteContact}
+            />
+          ))}
       </div>
       <div className='d-flex justify-content-center mt-2'>
         <button disabled={page === 0} onClick={() => changePage(page - 1)}>
