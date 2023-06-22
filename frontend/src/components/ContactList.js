@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import useSWR, { useSWRConfig } from 'swr';
 import Card from './Card';
-import  DeleteConfirmation  from './ConfirmationComponent';
+import  { DeleteConfirmation, ConfirmationDialog}  from './ConfirmationComponent';
 
 const ContactList = () => {
   const { mutate } = useSWRConfig();
