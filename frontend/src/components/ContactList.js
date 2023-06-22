@@ -3,12 +3,15 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import useSWR, { useSWRConfig } from 'swr';
 import Card from './Card';
+import  DeleteConfirmation  from './ConfirmationComponent';
 
 const ContactList = () => {
   const { mutate } = useSWRConfig();
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(8);
   const [search, setSearch] = useState('');
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [selectedContact, setSelectedContact] = useState(null);
 
   const getContacts = async () => {
     const response = await axios.get(`http://localhost:5000/contacts?page=${page}&limit=${limit}`);
@@ -18,13 +21,25 @@ const ContactList = () => {
   const { data } = useSWR(`contacts?page=${page}&limit=${limit}`, getContacts, { page, limit });
   if (!data) return <h2>Loading...</h2>;
 
-  const deleteContact = async (contactId) => {
+  const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5000/contacts/${contactId}`);
-      mutate(`contacts?page=${page}&limit=${limit}`);;
+      await axios.delete(`http://localhost:5000/contacts/${selectedContact}`);
+      mutate(`contacts?page=${page}&limit=${limit}`);
     } catch (error) {
       console.log(error);
     }
+    setShowDeleteConfirmation(false);
+    setSelectedContact(null);
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteConfirmation(false);
+    setSelectedContact(null);
+  };
+
+  const confirmDeleteContact = (contactId) => {
+    setSelectedContact(contactId);
+    setShowDeleteConfirmation(true);
   };
 
   const changePage = (newPage) => {
@@ -32,24 +47,24 @@ const ContactList = () => {
   };
 
   return (
-    <div className='container-fluid'>
-      <h1 className='text-center mt-2 mb-3'>Contacts</h1>
-      <h3 className='fw-normal'>List of Contacts</h3>
-      <Link to='/contacts/add' className='btn btn-primary mb-2'>
+    <div className="container-fluid">
+      <h1 className="text-center mt-2 mb-3">Contacts</h1>
+      <h3 className="fw-normal">List of Contacts</h3>
+      <Link to="/contacts/add" className="btn btn-primary mb-2">
         Add New
       </Link>
-      <div className='input-group mb-3'>
+      <div className="input-group mb-3">
         <input
-          type='text'
-          className='form-control'
-          placeholder='Search Contacts...'
+          type="text"
+          className="form-control"
+          placeholder="Search Contacts..."
           onChange={(e) => setSearch(e.target.value)}
         />
-        <button className='btn btn-outline-secondary' type='button'>
+        <button className="btn btn-outline-secondary" type="button">
           Search
         </button>
       </div>
-      <div className='d-flex justify-content-start flex-wrap'>
+      <div className="d-flex justify-content-start flex-wrap">
         {data.result
           .filter((item) => {
             const lowercaseSearch = search.toLowerCase();
@@ -68,11 +83,11 @@ const ContactList = () => {
             <Card
               key={item.uuid}
               contact={item}
-              deleteContact={deleteContact}
+              deleteContact={confirmDeleteContact}
             />
           ))}
       </div>
-      <div className='d-flex justify-content-center mt-2'>
+      <div className="d-flex justify-content-center mt-2">
         <button disabled={page === 0} onClick={() => changePage(page - 1)}>
           Previous
         </button>
@@ -85,6 +100,10 @@ const ContactList = () => {
           Next
         </button>
       </div>
+
+      {showDeleteConfirmation && (
+        <DeleteConfirmation onDelete={handleDelete} onCancel={handleCancelDelete} />
+      )}
     </div>
   );
 };
