@@ -22,15 +22,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 border: Border.all(color: Colors.grey),
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.white,
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(color: Colors.grey, blurRadius: 20, spreadRadius: 3)
                 ]),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 25),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 25),
                     child: Center(
                       child: Text(
                         'Sign In',
@@ -40,36 +40,36 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 30),
+                    margin: const EdgeInsets.symmetric(horizontal: 30),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 15),
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 15),
                           child: Text(
                             "Email",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 19),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 15),
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 15),
                           child: TextField(
                               decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             hintText: 'Email',
                           )),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 15),
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 15),
                           child: Text(
                             "Password",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 19),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 20),
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 20),
                           child: TextField(
                               decoration: InputDecoration(
                             border: OutlineInputBorder(),
@@ -81,11 +81,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: ButtonStyle(
                                   padding:
                                       MaterialStateProperty.all<EdgeInsets>(
-                                          EdgeInsets.symmetric(
+                                          const EdgeInsets.symmetric(
                                               vertical: 15, horizontal: 112)),
                                   backgroundColor:
-                                      MaterialStatePropertyAll<Color>(
-                                          Colors.greenAccent)),
+                                      const MaterialStatePropertyAll<Color>(
+                                          Color(0xFF35C680))),
                               onPressed: () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                               child: const Text(
                                 'Login',
-                                style: TextStyle(fontSize: 25),
+                                style: TextStyle(fontSize: 20),
                               )),
                         ),
                         Center(
@@ -113,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: const Text(
                                   'Register',
                                   style: TextStyle(
-                                      color: Colors.greenAccent, fontSize: 30),
+                                      color: Color(0xFF0E9C58), fontSize: 25),
                                 )),
                           ),
                         )
