@@ -9,7 +9,7 @@ class TitleApp extends StatelessWidget {
       child: Text(
         'Contacts',
         style: TextStyle(
-          fontSize: 30,
+          fontSize: 35,
           fontWeight: FontWeight.w500
         ),
       ),
