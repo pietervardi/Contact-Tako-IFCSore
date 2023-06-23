@@ -16,7 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: Center(
           child: Container(
-            width: 350,
+            width: 400,
             height: 425,
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
