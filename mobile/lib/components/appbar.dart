@@ -10,39 +10,34 @@ AppBar buildAppBar(BuildContext context) {
     title: const Text(
       'SEPTACT',
       style: TextStyle(
-        fontSize: 25,
-        color: Colors.black,
-        fontWeight: FontWeight.w500
-      ),
+          fontSize: 25, color: Colors.black, fontWeight: FontWeight.w500),
     ),
     actions: [
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 8),
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF6C757D)
-          ),
-          onPressed: () => Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const LoginScreen(),
-            ),
-          ),
-          child: const Row(
-            children: [
-              Icon(
-                Icons.logout,
-                size: 15,
-              ),
-              SizedBox(width: 5,),
-              Text(
-                'Log Out',
-                style: TextStyle(
-                  fontSize: 12
+            style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF6C757D)),
+            onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const LoginScreen(),
+                  ),
                 ),
-              )
-            ],
-          )
-        ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.logout,
+                  size: 15,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  'Log Out',
+                  style: TextStyle(fontSize: 12),
+                )
+              ],
+            )),
       ),
     ],
   );
