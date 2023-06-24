@@ -90,8 +90,8 @@ class ContactCard extends StatelessWidget {
                             ),
                           );
                         },
-                        child: const Row(
-                          children: [
+                        child: Row(
+                          children: const [
                             Icon(
                               Icons.edit,
                               size: 20,
@@ -118,8 +118,8 @@ class ContactCard extends StatelessWidget {
                         onPressed: () {
                           
                         },
-                        child: const Row(
-                          children: [
+                        child: Row(
+                          children: const [
                             Icon(
                               Icons.delete,
                               size: 20,

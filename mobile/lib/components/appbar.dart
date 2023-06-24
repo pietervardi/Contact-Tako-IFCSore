@@ -24,7 +24,7 @@ AppBar buildAppBar(BuildContext context) {
                   ),
                 ),
             child: Row(
-              children: [
+              children: const [
                 Icon(
                   Icons.logout,
                   size: 15,
